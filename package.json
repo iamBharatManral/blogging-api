@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "api server for blogging platform",
   "devDependencies": {
+    "@types/express": "^5.0.0",
     "@types/node": "^22.8.7",
     "typescript": "^5.6.3"
   },
