@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
 import { generateId } from '../utils';
+import { Post } from '../types/post';
+import { warn } from 'console';
 
 export function createPost(req: Request, res: Response) {
   const post = req.body;
@@ -48,7 +50,18 @@ export function getPost(req: Request, res: Response) {
 }
 
 export function getAll(req: Request, res: Response) {
+  const allPosts = req.store?.getAll();
+  const termToSearch = req.query.term?.toString() || "";
+  let filteredPosts: Array<Post>;
+  if (allPosts && !termToSearch) {
+    filteredPosts = allPosts;
+  } else if (allPosts) {
+    filteredPosts = allPosts.filter((p: Post) => p.title.includes(termToSearch) || p.content.includes(termToSearch) || p.category.includes(termToSearch)
+    )
+  } else {
+    filteredPosts = []
+  }
   res.status(200)
     .header('content-type', 'application/json')
-    .json({ error: null, data: req.store?.getAll() })
+    .json({ error: null, data: filteredPosts })
 }
