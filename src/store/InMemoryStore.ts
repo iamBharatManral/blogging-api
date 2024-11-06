@@ -1,10 +1,10 @@
 import Store from './store';
 import { Post } from '../types/post';
 
-export const InMemoryStore: Store & { store: Array<Post> } = {
+const InMemoryStore: Store & { store: Array<Post> } = {
   store: [],
 
-  save(post: Post) {
+  save(post: Post): void {
     this.store.push(post)
   },
 
@@ -26,3 +26,5 @@ export const InMemoryStore: Store & { store: Array<Post> } = {
   }
 
 }
+
+export default InMemoryStore;
